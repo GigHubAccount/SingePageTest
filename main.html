@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>我的示例网页</title>
+  <meta name="description" content="一个简洁、响应式、可暗色模式的单文件 HTML 示例。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>✨</text></svg>">
+  <style>
+    :root{
+      --bg: #f7f7fb;
+      --fg: #0f172a;
+      --muted: #475569;
+      --card: #ffffff;
+      --accent: #2563eb;
+      --ring: rgba(37, 99, 235, .35);
+      --border: #e5e7eb;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#0b1020; --fg:#e5e7eb; --muted:#94a3b8; --card:#131a2e; --border:#1f2937; }
+    }
+    [data-theme="dark"]{ --bg:#0b1020; --fg:#e5e7eb; --muted:#94a3b8; --card:#131a2e; --border:#1f2937; }
+
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{ margin:0; font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif; background:var(--bg); color:var(--fg); }
+    a{ color:var(--accent); text-decoration:none }
+    a:hover{ text-decoration:underline }
+
+    .container{ max-width: 980px; margin: 0 auto; padding: 24px }
+
+    /* 顶部导航 */
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 0; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:700 }
+    .brand-logo{ width:28px; height:28px; display:grid; place-items:center; border-radius:8px; background:linear-gradient(135deg, var(--accent), #7c3aed); color:white }
+    .nav a.button{ padding:.5rem .9rem; border:1px solid var(--border); border-radius:10px; background:var(--card) }
+
+    /* 主视觉 */
+    .hero{ display:grid; grid-template-columns: 1.2fr 1fr; gap:24px; align-items:center; padding:28px 0 }
+    .hero h1{ margin:0 0 8px; font-size: clamp(28px, 4vw, 44px); line-height:1.2 }
+    .hero p{ margin:0 0 18px; color:var(--muted) }
+    .hero .panel{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow: 0 10px 30px rgba(0,0,0,.06) }
+
+    .actions{ display:flex; gap:12px; flex-wrap:wrap }
+    .btn{ appearance:none; border:none; cursor:pointer; padding:.75rem 1rem; border-radius:12px; font-weight:600 }
+    .btn.primary{ background:linear-gradient(135deg, var(--accent), #7c3aed); color:white; box-shadow:0 6px 15px rgba(37,99,235,.35) }
+    .btn.ghost{ background:var(--card); border:1px solid var(--border) }
+    .btn:focus{ outline:2px solid var(--ring); outline-offset:2px }
+
+    /* 功能卡片 */
+    .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px }
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px; transition: transform .15s ease, box-shadow .15s ease }
+    .card:hover{ transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.08) }
+    .card h3{ margin:0 0 6px; font-size:18px }
+    .card p{ margin:0; color:var(--muted) }
+
+    /* 代码块 */
+    pre{ margin:0; padding:14px; background:#0b1020; color:#e5e7eb; border-radius:12px; overflow:auto; border:1px solid #111827 }
+    code{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: .95rem }
+
+    /* 页脚 */
+    footer{ padding:30px 0; color:var(--muted); font-size:.95rem }
+
+    /* 简易暗色开关 */
+    .switch{ display:inline-flex; align-items:center; gap:8px; user-select:none }
+    .switch input{ appearance:none; width:40px; height:22px; background:var(--border); border-radius:999px; position:relative; outline:none; transition: background .2s }
+    .switch input::after{ content:""; position:absolute; top:3px; left:3px; width:16px; height:16px; border-radius:50%; background:white; transition: transform .2s }
+    .switch input:checked{ background: #334155 }
+    .switch input:checked::after{ transform: translateX(18px) }
+
+    /* 小屏优化 */
+    @media (max-width: 840px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="container nav" role="navigation" aria-label="主导航">
+    <div class="brand">
+      <div class="brand-logo" aria-hidden="true">★</div>
+      <span>我的网站</span>
+    </div>
+    <div class="actions">
+      <label class="switch" title="切换暗色模式">
+        <input id="themeToggle" type="checkbox" aria-label="暗色模式切换">
+        <span>暗色</span>
+      </label>
+      <a class="button" href="#features">功能</a>
+      <a class="button" href="#code">示例代码</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="hero">
+      <div>
+        <h1>你好，世界！</h1>
+        <p>这是一个简洁、响应式、带暗色模式的单文件 HTML 页面模板。你可以直接复制使用，或在此基础上继续扩展。</p>
+        <div class="actions">
+          <button class="btn primary" onclick="alert('欢迎使用！')">开始使用</button>
+          <a class="btn ghost" href="#features">了解功能</a>
+        </div>
+      </div>
+      <div class="panel" aria-labelledby="statsTitle">
+        <h2 id="statsTitle" style="margin:0 0 8px; font-size:18px">小面板 · 即时演示</h2>
+        <div class="grid" style="margin-top:10px">
+          <div class="card"><h3>无依赖</h3><p>无需框架、无需构建，直接打开即可运行。</p></div>
+          <div class="card"><h3>响应式</h3><p>使用 CSS Grid 与现代布局，移动端也很美观。</p></div>
+          <div class="card"><h3>可定制</h3><p>修改变量即可更换主题与风格。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" style="padding:18px 0">
+      <h2 style="margin:0 0 12px">功能特性</h2>
+      <div class="grid">
+        <article class="card" aria-labelledby="a11yTitle">
+          <h3 id="a11yTitle">语义化与可访问性</h3>
+          <p>使用语义标签（header/main/section/footer）与可访问性属性（aria-*）。</p>
+        </article>
+        <article class="card">
+          <h3>局部组件化</h3>
+          <p>卡片、按钮、开关等样式可复用，便于扩展成设计系统。</p>
+        </article>
+        <article class="card">
+          <h3>交互小功能</h3>
+          <p>内置暗色模式切换，示范状态持久化与首选方案。</p>
+        </article>
+        <article class="card">
+          <h3>表单示例</h3>
+          <p>下面提供了一个最小联系表单与校验示例。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="code" style="padding:18px 0">
+      <h2 style="margin:0 0 12px">示例代码片段</h2>
+      <div class="card">
+        <pre><code>&lt;button class="btn primary"&gt;按钮&lt;/button&gt;
+&lt;div class="card"&gt;卡片内容&lt;/div&gt;</code></pre>
+      </div>
+    </section>
+
+    <section id="contact" style="padding:18px 0">
+      <h2 style="margin:0 0 12px">联系我</h2>
+      <form id="contactForm" class="card" novalidate>
+        <div style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+          <label>姓名<br>
+            <input name="name" required placeholder="你的名字" style="width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--fg)">
+          </label>
+          <label>邮箱<br>
+            <input type="email" name="email" required placeholder="you@example.com" style="width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--fg)">
+          </label>
+        </div>
+        <label style="display:block; margin-top:10px">留言<br>
+          <textarea name="message" rows="4" placeholder="想说点什么…" style="width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--fg)"></textarea>
+        </label>
+        <div style="display:flex; gap:10px; margin-top:12px">
+          <button class="btn primary" type="submit">发送</button>
+          <button class="btn ghost" type="reset">清空</button>
+        </div>
+        <p id="formMsg" aria-live="polite" style="margin:10px 0 0; color:var(--muted)"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="container">
+    <hr style="border:none; border-top:1px solid var(--border); margin:0 0 16px">
+    <footer>© <span id="year"></span> 我的示例网页 · 构建于原生 HTML/CSS/JS</footer>
+  </footer>
+
+  <script>
+    // 年份
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 主题：优先使用本地存储，其次系统偏好
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if(saved === 'dark'){ root.setAttribute('data-theme','dark'); toggle.checked = true; }
+    if(saved === 'light'){ root.removeAttribute('data-theme'); toggle.checked = false; }
+
+    toggle.addEventListener('change', () => {
+      const dark = toggle.checked;
+      if(dark){
+        root.setAttribute('data-theme','dark');
+        localStorage.setItem('theme','dark');
+      }else{
+        root.removeAttribute('data-theme');
+        localStorage.setItem('theme','light');
+      }
+    });
+
+    // 表单校验与提示（纯前端演示）
+    document.getElementById('contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.currentTarget);
+      const name = (fd.get('name')||'').trim();
+      const email = (fd.get('email')||'').trim();
+      if(!name || !email){
+        return showMsg('请填写姓名和邮箱。');
+      }
+      showMsg('已发送（示例）。你可以在这里对接后端 API。');
+      e.currentTarget.reset();
+    });
+
+    function showMsg(text){
+      const el = document.getElementById('formMsg');
+      el.textContent = text;
+    }
+  </script>
+</body>
+</html>
